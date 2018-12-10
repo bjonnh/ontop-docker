@@ -1,36 +1,26 @@
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 
-LABEL maintainer="martynas@atomgraph.com"
+LABEL maintainer="bjo@uic.edu"
+ARG ONTOP_VERSION=3.0.0-beta-2
 
 WORKDIR /usr/ontop
 
-COPY ./ontop-distribution-3.0.0-beta-2/jdbc/ jdbc/
-COPY ./ontop-distribution-3.0.0-beta-2/lib/ lib/
-COPY ./ontop-distribution-3.0.0-beta-2/ontop .
+RUN curl https://netcologne.dl.sourceforge.net/project/ontop4obda/ontop-$ONTOP_VERSION/ontop-distribution-$ONTOP_VERSION.zip -o /ontop.zip
+RUN curl https://netcologne.dl.sourceforge.net/project/ontop4obda/ontop-$ONTOP_VERSION/ontop-jetty-bundle-$ONTOP_VERSION.zip -o /ontop-jetty-bundle.zip
+RUN unzip /ontop.zip -d /ontop-distribution-$ONTOP_VERSION
+RUN unzip /ontop-jetty-bundle.zip -d /ontop-jetty-bundle-$ONTOP_VERSION
+RUN mkdir -p /usr/ontop/jetty
+RUN mv /ontop-jetty-bundle-$ONTOP_VERSION/jetty-distribution*/* /usr/ontop/jetty
+RUN mv /ontop-distribution-$ONTOP_VERSION/lib /usr/ontop
+RUN mv /ontop-distribution-$ONTOP_VERSION/jdbc /usr/ontop/lib/ext
+RUN mv /ontop-distribution-$ONTOP_VERSION/ontop /usr/ontop/ontop
+RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /usr/ontop/jetty/lib/ext/postgresql-42.2.5.jar
 
-COPY ./ontop-jetty-bundle-3.0.0-beta-2/ jetty/
+RUN mkdir /configs
 
-COPY entrypoint.sh .
-
-ENV ONTOP_JDBC_PROPERTIES=jdbc.properties
-
-ENV ONTOP_JDBC_NAME=
-ENV ONTOP_JDBC_URL=
-ENV ONTOP_JDBC_USER=
-ENV ONTOP_JDBC_PASSWORD=
-ENV ONTOP_JDBC_DRIVER=
-
-ENV ONTOP_MAPPING=mapping.obda
-ENV ONTOP_ONTOLOGY=ontology.owl
-ENV ONTOP_BASE_IRI=
-
-ENV ONTOP_REPOSITORY_ID=
-ENV ONTOP_REPOSITORY_TITLE=
-
-VOLUME $ONTOP_MAPPING
-VOLUME $ONTOP_ONTOLOGY
+COPY entrypoint-config.sh .
 
 # rdf4j-workbench port
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "entrypoint-config.sh"]
