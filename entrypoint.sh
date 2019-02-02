@@ -1,68 +1,68 @@
 #!/bin/sh
 set -e
 
-if [ -z "$ONTOP_JDBC_NAME" ] ; then
+if [[ -z "$ONTOP_JDBC_NAME" ]] ; then
     echo '$ONTOP_JDBC_NAME not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_JDBC_URL" ] ; then
+if [[ -z "$ONTOP_JDBC_URL" ]] ; then
     echo '$ONTOP_JDBC_URL not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_JDBC_USER" ] ; then
+if [[ -z "$ONTOP_JDBC_USER" ]] ; then
     echo '$ONTOP_JDBC_USER not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_JDBC_PASSWORD" ] ; then
+if [[ -z "$ONTOP_JDBC_PASSWORD" ]] ; then
     echo '$ONTOP_JDBC_PASSWORD not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_JDBC_DRIVER" ] ; then
+if [[ -z "$ONTOP_JDBC_DRIVER" ]] ; then
     echo '$ONTOP_JDBC_DRIVER not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_JDBC_PROPERTIES" ] ; then
+if [[ -z "$ONTOP_JDBC_PROPERTIES" ]] ; then
     echo '$ONTOP_JDBC_PROPERTIES not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_MAPPING" ] ; then
+if [[ -z "$ONTOP_MAPPING" ]] ; then
     echo '$ONTOP_MAPPING not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_ONTOLOGY" ] ; then
+if [[ -z "$ONTOP_ONTOLOGY" ]] ; then
     echo '$ONTOP_ONTOLOGY not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_BASE_IRI" ] ; then
+if [[ -z "$ONTOP_BASE_IRI" ]] ; then
     echo '$ONTOP_BASE_IRI not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_REPOSITORY_ID" ] ; then
+if [[ -z "$ONTOP_REPOSITORY_ID" ]] ; then
     echo '$ONTOP_REPOSITORY_ID not set'
     exit 1
 fi
 
-if [ -z "$ONTOP_REPOSITORY_TITLE" ] ; then
+if [[ -z "$ONTOP_REPOSITORY_TITLE" ]] ; then
     echo '$ONTOP_REPOSITORY_TITLE not set'
     exit 1
 fi
 
-rm -f $ONTOP_JDBC_PROPERTIES
+rm -f ${ONTOP_JDBC_PROPERTIES}
 
-echo "jdbc.name = $ONTOP_JDBC_NAME" >> $ONTOP_JDBC_PROPERTIES
-echo "jdbc.url = $ONTOP_JDBC_URL" >> $ONTOP_JDBC_PROPERTIES
-echo "jdbc.user = $ONTOP_JDBC_USER" >> $ONTOP_JDBC_PROPERTIES
-echo "jdbc.password = $ONTOP_JDBC_PASSWORD" >> $ONTOP_JDBC_PROPERTIES
-echo "jdbc.driver = $ONTOP_JDBC_DRIVER" >> $ONTOP_JDBC_PROPERTIES
+echo "jdbc.name = $ONTOP_JDBC_NAME" >> ${ONTOP_JDBC_PROPERTIES}
+echo "jdbc.url = $ONTOP_JDBC_URL" >> ${ONTOP_JDBC_PROPERTIES}
+echo "jdbc.user = $ONTOP_JDBC_USER" >> ${ONTOP_JDBC_PROPERTIES}
+echo "jdbc.password = $ONTOP_JDBC_PASSWORD" >> ${ONTOP_JDBC_PROPERTIES}
+echo "jdbc.driver = $ONTOP_JDBC_DRIVER" >> ${ONTOP_JDBC_PROPERTIES}
 
 # cat $ONTOP_JDBC_PROPERTIES
 
@@ -70,7 +70,7 @@ echo "jdbc.driver = $ONTOP_JDBC_DRIVER" >> $ONTOP_JDBC_PROPERTIES
 # https://github.com/ontop/ontop/wiki/OntopCLI#ontop-bootstrap
 
 printf "\n### Bootstrapping ontop mapping\n\n"
-./ontop bootstrap -p $ONTOP_JDBC_PROPERTIES -m $ONTOP_MAPPING -t $ONTOP_ONTOLOGY -b $ONTOP_BASE_IRI
+./ontop bootstrap -p ${ONTOP_JDBC_PROPERTIES} -m ${ONTOP_MAPPING} -t ${ONTOP_ONTOLOGY} -b ${ONTOP_BASE_IRI}
 
 # cat $ONTOP_MAPPING
 # cat $ONTOP_ONTOLOGY
@@ -83,7 +83,7 @@ export JETTY_HOME="${ONTOP_HOME}/jetty"
 
 # copy the JDBC drivers to Workbench
 # https://github.com/ontop/ontop/issues/246
-cp $ONTOP_HOME/jdbc/* $JETTY_HOME/lib/ext
+cp ${ONTOP_HOME}/jdbc/* ${JETTY_HOME}/lib/ext
 
 cd jetty
 cd ontop-base

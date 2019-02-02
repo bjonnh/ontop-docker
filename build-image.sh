@@ -10,7 +10,7 @@ rm "${ONTOP_DIST}.zip"
 JETTY_BUNDLE=ontop-jetty-bundle-3.0.0-beta-2
 curl "https://netix.dl.sourceforge.net/project/ontop4obda/ontop-3.0.0-beta-2/${JETTY_BUNDLE}.zip" -o "${JETTY_BUNDLE}.zip"
 unzip "${JETTY_BUNDLE}.zip" -d "${JETTY_BUNDLE}"
-mv $JETTY_BUNDLE/jetty-distribution-9.4.6.v20170531/* $JETTY_BUNDLE # move content up one level
+mv ${JETTY_BUNDLE}/jetty-distribution-9.4.6.v20170531/* ${JETTY_BUNDLE} # move content up one level
 rm -r "${JETTY_BUNDLE}/jetty-distribution-9.4.6.v20170531"
 rm "${JETTY_BUNDLE}.zip"
 

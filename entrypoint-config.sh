@@ -21,7 +21,7 @@ for config in /configs/*/ ; do
          --data-urlencode "Repository+title=${TITLE}" \
          --data-urlencode "type=ontop-virtual" \
          http://localhost:8080/rdf4j-workbench/repositories/NONE/create
-    printf "\n### Repository 'http://localhost:8080/rdf4j-workbench/repositories/${ONTOP_REPOSITORY_ID}' created. Server ready\n\n"
+    printf "\n### Repository 'http://localhost:8080/rdf4j-workbench/repositories/${ID}' created. Server ready\n\n"
 done
 
 while :; do sleep 1; done # infinite loop
