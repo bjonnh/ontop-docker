@@ -15,12 +15,12 @@ RUN mv /ontop-distribution-$ONTOP_VERSION/lib /usr/ontop
 RUN mv /ontop-distribution-$ONTOP_VERSION/jdbc /usr/ontop/lib/ext
 RUN mv /ontop-distribution-$ONTOP_VERSION/ontop /usr/ontop/ontop
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /usr/ontop/jetty/lib/ext/postgresql-42.2.5.jar
-
+RUN ln -s /usr/ontop/jetty/lib/ext/postgresql-42.2.5.jar /usr/ontop/lib  # Should be in ext, but not added in the script
 RUN mkdir /configs
 
 COPY entrypoint-config.sh .
-
+ENV PATH="/usr/ontop/:${PATH}"
 # rdf4j-workbench port
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/sh", "entrypoint-config.sh"]
+CMD ["/bin/sh", "entrypoint-config.sh"]

@@ -12,9 +12,14 @@ for config in /configs/*/ ; do
     ID=$(cat ${config}/id)
     TITLE=$(cat ${config}/title)
     printf "\n### Creating repository. ID: ${ID} Title: ${TITLE}\n\n"
+    if [[ -f ${config}/mapping.ttl ]]; then
+        CONFIGFILE="obdaFile=${config}/mapping.ttl"
+    else
+        CONFIGFILE="obdaFile=${config}/mapping.obda"
+    fi
 
     curl -s -X POST \
-         --data-urlencode "obdaFile=${config}/mapping.obda"  \
+         --data-urlencode ${CONFIGFILE}  \
          --data-urlencode "owlFile=${config}/ontology.owl" \
          --data-urlencode "propertiesFile=${config}/jdbc.properties" \
          --data-urlencode "Repository+ID=${ID}" \

@@ -1,6 +1,7 @@
 # Create Ontop RDF4J Workbench repositories from SQL databases
 
-Usage
+Usage of this container
+
 ## Create configs
 
 Create a configs/<yourendpoint> directory that contains the following files:
@@ -15,6 +16,11 @@ Create a configs/<yourendpoint> directory that contains the following files:
 docker build . -t wb
 docker run -it --rm --name wb -v $PWD/configs:/configs wb
 ```
+
+## How to use bootstrapping
+
+If you do not have an already existing mapping, you can use ontop bootstrap that way:
+
 
 # TODO
 
